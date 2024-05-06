@@ -66,7 +66,7 @@ def md5sum(filename):
     and return hex digest as a string.
     Output should be compatible with md5sum command"""
 
-    f = open(filename, "rb")
+    f = open(filename, "r")
     sum = hashlib.md5()
     while 1:
         block = f.read(MD5_BLOCKSIZE)
@@ -105,7 +105,7 @@ def combine_notice_files_html(file_hash, input_dir, output_filename):
         id_count += 1
 
     # Open the output file, and output the header pieces
-    output_file = open(output_filename, "wb")
+    output_file = open(output_filename, "w")
 
     print("<html><head>", file=output_file)
     print(HTML_OUTPUT_CSS, file=output_file)
@@ -152,7 +152,7 @@ def combine_notice_files_text(file_hash, input_dir, output_filename, file_title)
     """Combine notice files in FILE_HASH and output a text version to OUTPUT_FILENAME."""
 
     SRC_DIR_STRIP_RE = re.compile(input_dir + "(/.*).txt")
-    output_file = open(output_filename, "wb")
+    output_file = open(output_filename, "w")
     print(file_title, file=output_file)
     for value in list(file_hash.values()):
       print("============================================================", file=output_file)
