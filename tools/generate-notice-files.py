@@ -58,9 +58,6 @@ if len(args) != 4:
     print(__doc__)
     sys.exit(1)
 
-def hexify(s):
-    return ("%02x"*len(s)) % tuple(map(ord, s))
-
 def md5sum(filename):
     """Calculate an MD5 of the file given by FILENAME,
     and return hex digest as a string.
@@ -74,7 +71,7 @@ def md5sum(filename):
             break
         sum.update(block)
     f.close()
-    return hexify(sum.digest())
+    return sum.hexdigest()
 
 
 def html_escape(text):
