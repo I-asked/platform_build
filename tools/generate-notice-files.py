@@ -137,7 +137,6 @@ def combine_notice_files_html(file_hash, input_dir, output_filename):
             print(html_escape(open(value[0]).read()), file=output_file)
         except Exception as e:
             print('Exception raised while processing', value[0])
-            pass
         print("</pre><!-- license-text -->", file=output_file)
         print("</td></tr><!-- same-license -->", file=output_file)
         print(file=output_file)
@@ -161,7 +160,10 @@ def combine_notice_files_text(file_hash, input_dir, output_filename, file_title)
       for filename in sorted(value):
         print(SRC_DIR_STRIP_RE.sub(r"\1", filename), file=output_file)
       print("------------------------------------------------------------", file=output_file)
-      print(open(value[0]).read(), file=output_file)
+      try:
+        print(open(value[0]).read(), file=output_file)
+      except Exception as e:
+        print('Exception raised while processing', value[0])
     output_file.close()
 
 def main(args):
