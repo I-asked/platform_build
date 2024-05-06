@@ -56,7 +56,7 @@ def validate(prop):
   """
   check_pass = True
   buildprops = prop.to_dict()
-  for key, value in buildprops.iteritems():
+  for key, value in buildprops.items():
     # Check build properties' length.
     if len(key) > PROP_NAME_MAX:
       check_pass = False

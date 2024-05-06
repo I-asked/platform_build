@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import print_function
+
 
 from collections import deque, OrderedDict
 from hashlib import sha1
@@ -239,8 +239,8 @@ class BlockImageDiff(object):
 
     # The range sets in each filemap should comprise a partition of
     # the care map.
-    self.AssertPartition(src.care_map, src.file_map.values())
-    self.AssertPartition(tgt.care_map, tgt.file_map.values())
+    self.AssertPartition(src.care_map, list(src.file_map.values()))
+    self.AssertPartition(tgt.care_map, list(tgt.file_map.values()))
 
   def Compute(self, prefix):
     # When looking for a source file to use as the diff input for a
@@ -848,7 +848,7 @@ class BlockImageDiff(object):
 
   def FindTransfers(self):
     empty = RangeSet()
-    for tgt_fn, tgt_ranges in self.tgt.file_map.items():
+    for tgt_fn, tgt_ranges in list(self.tgt.file_map.items()):
       if tgt_fn == "__ZERO":
         # the special "__ZERO" domain is all the blocks not contained
         # in any file and that are filled with zeros.  We have a
@@ -892,7 +892,7 @@ class BlockImageDiff(object):
       Transfer(tgt_fn, None, tgt_ranges, empty, "new", self.transfers)
 
   def AbbreviateSourceNames(self):
-    for k in self.src.file_map.keys():
+    for k in list(self.src.file_map.keys()):
       b = os.path.basename(k)
       self.src_basenames[b] = k
       b = re.sub("[0-9]+", "#", b)

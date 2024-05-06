@@ -17,7 +17,7 @@
 # A python port of system/core/libmincrypt/tools/DumpPublicKey.java
 # Dumps a C initializer for a given public key. Depends on openssl
 
-from StringIO import StringIO
+from io import StringIO
 import subprocess
 import sys
 
@@ -81,12 +81,12 @@ def write_key(key_path, out):
         out.write("v%d " % version)
 
     modulus = subprocess.check_output(["openssl", "x509", "-in", key_path, "-modulus", "-noout"])
-    N = long(modulus.replace("Modulus=", ""), 16)
+    N = int(modulus.replace("Modulus=", ""), 16)
 
     nwords = N.bit_length() / 32
     out.write("{%d" % nwords)
 
-    B = 0x100000000L
+    B = 0x100000000
     N0inv = B - modinv(N, B)
     out.write(",")
     out.write(hex(N0inv)[:-1])
@@ -121,4 +121,4 @@ if __name__ == "__main__":
         if i < len(sys.argv) - 1:
             result.write(",")
 
-    print result.getvalue()
+    print(result.getvalue())

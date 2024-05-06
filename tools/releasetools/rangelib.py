@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from __future__ import print_function
+
 import heapq
 import itertools
 
@@ -40,7 +40,7 @@ class RangeSet(object):
     return self.data == other.data
   def __ne__(self, other):
     return self.data != other.data
-  def __nonzero__(self):
+  def __bool__(self):
     return bool(self.data)
 
   def __str__(self):
@@ -129,8 +129,8 @@ class RangeSet(object):
     """
     out = []
     z = 0
-    for p, d in heapq.merge(zip(self.data, itertools.cycle((+1, -1))),
-                            zip(other.data, itertools.cycle((+1, -1)))):
+    for p, d in heapq.merge(list(zip(self.data, itertools.cycle((+1, -1)))),
+                            list(zip(other.data, itertools.cycle((+1, -1))))):
       if (z == 0 and d == 1) or (z == 1 and d == -1):
         out.append(p)
       z += d
@@ -147,8 +147,8 @@ class RangeSet(object):
     """
     out = []
     z = 0
-    for p, d in heapq.merge(zip(self.data, itertools.cycle((+1, -1))),
-                            zip(other.data, itertools.cycle((+1, -1)))):
+    for p, d in heapq.merge(list(zip(self.data, itertools.cycle((+1, -1)))),
+                            list(zip(other.data, itertools.cycle((+1, -1))))):
       if (z == 1 and d == 1) or (z == 2 and d == -1):
         out.append(p)
       z += d
@@ -166,8 +166,8 @@ class RangeSet(object):
 
     out = []
     z = 0
-    for p, d in heapq.merge(zip(self.data, itertools.cycle((+1, -1))),
-                            zip(other.data, itertools.cycle((-1, +1)))):
+    for p, d in heapq.merge(list(zip(self.data, itertools.cycle((+1, -1)))),
+                            list(zip(other.data, itertools.cycle((-1, +1))))):
       if (z == 0 and d == 1) or (z == 1 and d == -1):
         out.append(p)
       z += d
@@ -186,8 +186,8 @@ class RangeSet(object):
     # This is like intersect, but we can stop as soon as we discover the
     # output is going to be nonempty.
     z = 0
-    for _, d in heapq.merge(zip(self.data, itertools.cycle((+1, -1))),
-                            zip(other.data, itertools.cycle((+1, -1)))):
+    for _, d in heapq.merge(list(zip(self.data, itertools.cycle((+1, -1)))),
+                            list(zip(other.data, itertools.cycle((+1, -1))))):
       if (z == 1 and d == 1) or (z == 2 and d == -1):
         return True
       z += d
@@ -227,8 +227,8 @@ class RangeSet(object):
     out = []
     offset = 0
     start = None
-    for p, d in heapq.merge(zip(self.data, itertools.cycle((-5, +5))),
-                            zip(other.data, itertools.cycle((-1, +1)))):
+    for p, d in heapq.merge(list(zip(self.data, itertools.cycle((-5, +5)))),
+                            list(zip(other.data, itertools.cycle((-1, +1))))):
       if d == -5:
         start = p
       elif d == +5:

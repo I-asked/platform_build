@@ -69,27 +69,27 @@ class Dependencies:
         if upper in deps:
           recurse(obj, deps[upper], visited)
     self.deps = deps
-    self.parts = [(dep.lower.split('.'),dep) for dep in deps.itervalues()]
+    self.parts = [(dep.lower.split('.'),dep) for dep in deps.values()]
     # transitive closure of dependencies
-    for dep in deps.itervalues():
+    for dep in deps.values():
       recurse(dep, dep, [])
     # disallow everything from the low level components
-    for dep in deps.itervalues():
+    for dep in deps.values():
       if dep.lowlevel:
-        for d in deps.itervalues():
+        for d in deps.values():
           if dep != d and not d.legacy:
             dep.transitive.add(d.lower)
     # disallow the 'top' components everywhere but in their own package
-    for dep in deps.itervalues():
+    for dep in deps.values():
       if dep.top and not dep.legacy:
-        for d in deps.itervalues():
+        for d in deps.values():
           if dep != d and not d.legacy:
             d.transitive.add(dep.lower)
-    for dep in deps.itervalues():
+    for dep in deps.values():
       dep.transitive = set([x+"." for x in dep.transitive])
     if False:
-      for dep in deps.itervalues():
-        print "-->", dep.lower, "-->", dep.transitive
+      for dep in deps.values():
+        print("-->", dep.lower, "-->", dep.transitive)
 
   # Lookup the dep object for the given package.  If pkg is a subpackage
   # of one with a rule, that one will be returned.  If no matches are found,
@@ -218,8 +218,8 @@ def examine_java_file(deps, filename):
     imports.append(m.group(1))
   # Do the checking
   if False:
-    print filename
-    print "'%s' --> %s" % (pkg, imports)
+    print(filename)
+    print("'%s' --> %s" % (pkg, imports))
   dep = deps.lookup(pkg)
   if not dep:
     sys.stderr.write(("%s: Error: Package does not appear in dependency file: "
