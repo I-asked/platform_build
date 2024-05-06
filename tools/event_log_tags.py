@@ -127,7 +127,7 @@ def WriteOutput(output_file, data):
       out = sys.stdout
       output_file = "<stdout>"
     else:
-      out = open(output_file, "wb")
+      out = open(output_file, "w")
     out.write(data)
     out.close()
   except (IOError, OSError) as e:
