@@ -54,7 +54,7 @@ class TagFile(object):
 
     if file_object is None:
       try:
-        file_object = open(filename, "rb")
+        file_object = open(filename, "r")
       except (IOError, OSError) as e:
         self.AddError(str(e))
         return
