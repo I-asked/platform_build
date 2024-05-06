@@ -66,7 +66,7 @@ def md5sum(filename):
     and return hex digest as a string.
     Output should be compatible with md5sum command"""
 
-    f = open(filename, "r")
+    f = open(filename, "rb")
     sum = hashlib.md5()
     while 1:
         block = f.read(MD5_BLOCKSIZE)
